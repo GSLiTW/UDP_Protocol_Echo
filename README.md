@@ -20,4 +20,4 @@ The client should print the message echoed from the server (the message it sends
 Using the select() function to monitoring the socket. After each timeout, the timeout interval would grow to be two times of the original timeout interval (The exponential backoff).
 
 ## Demonstration Video:
-[Youtube Video Link]: https://www.youtube.com/watch?v=ulBinXVq_wA
+[Youtube Video Link](https://www.youtube.com/watch?v=ulBinXVq_wA):
