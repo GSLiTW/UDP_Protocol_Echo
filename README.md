@@ -18,3 +18,6 @@ The client should print the message echoed from the server (the message it sends
 
 ## Retry:
 Using the select() function to monitoring the socket. After each timeout, the timeout interval would grow to be two times of the original timeout interval (The exponetial backoff).
+
+## Demonstration Video:
+

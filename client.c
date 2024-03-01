@@ -43,8 +43,6 @@ int main(int argc, char ** argv){
     server_addr.sin_addr.s_addr = inet_addr(ip);
 
     fd_set read_fds;
-    FD_ZERO(&read_fds);
-    FD_SET(sockfd, &read_fds);
     while(count < max_retry){
         current_timeout = base_timeout * (1 << count); // timeout = 2^count
         if (current_timeout > MAX_WAIT_INTERVAL) {
@@ -56,6 +54,9 @@ int main(int argc, char ** argv){
 
         addr_size = sizeof(server_addr);
         sendto(sockfd, message, message_len, 0, (struct sockaddr*)&server_addr, addr_size);
+
+        FD_ZERO(&read_fds);
+        FD_SET(sockfd, &read_fds);
 
         // Wait for response or timeout
         int activity = select(sockfd + 1, &read_fds, NULL, NULL, &timeout_value);
