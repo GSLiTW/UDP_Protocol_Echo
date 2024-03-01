@@ -12,6 +12,8 @@ gcc server.c -o server
 ./server <ip> <port>
 ```
 ```console
-./client <ip> <port> <message>
+./client <ip> <port> <message> <mex_retry>
 ```
 The client should print the message echoed from the server (the message it sends to the server originally).
+
+## Retry:
