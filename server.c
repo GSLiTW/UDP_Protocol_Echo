@@ -8,13 +8,13 @@
 
 int main(int argc, char ** argv){
 
-    if(argc != 2){
-        printf("Should pass in a PORT number\n");
+    if(argc != 3){
+        printf("Should pass in: IP PORT\n");
         exit(0);
     }
 
-    char *ip = "127.0.0.1";
-    int port = atoi(argv[1]);
+    char *ip = argv[1];
+    int port = atoi(argv[2]);
 
     int sockfd;
     struct sockaddr_in server_addr, client_addr;
@@ -24,7 +24,7 @@ int main(int argc, char ** argv){
 
     sockfd = socket(AF_INET, SOCK_DGRAM, 0);
     if(sockfd < 0){
-        perror("[-]socket error");
+        perror("socket error");
         exit(1);
     }
 
@@ -35,9 +35,14 @@ int main(int argc, char ** argv){
 
     n = bind(sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr));
     if(n < 0){
-        perror("[-]bind error");
+        perror("bind error");
         exit(1);
     }
+
+    bzero(buffer, 1024);
+    addr_size = sizeof(client_addr);
+    recvfrom(sockfd, buffer, 1024, 0, (struct sockaddr*)&client_addr, &addr_size);
+    sendto(sockfd, buffer, 1024, 0, (struct sockaddr*)&client_addr, addr_size);
 
     return 0;
 }
