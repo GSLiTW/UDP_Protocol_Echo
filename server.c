@@ -9,6 +9,11 @@
 #define BUF_SIZE 1024
 
 int main(int argc, char ** argv){
+    if(argc != 3){
+        printf("Usage: %s <IP> <PORT>\n", argv[0]);
+        exit(1);
+    }
+
     char *ip = argv[1];
     int port = atoi(argv[2]);
 
@@ -18,18 +23,13 @@ int main(int argc, char ** argv){
     socklen_t addr_size;
     int n;
 
-    if(argc != 3){
-        printf("Usage: %s <IP> <PORT>\n", argv[0]);
-        exit(1);
-    }
-
     sockfd = socket(AF_INET, SOCK_DGRAM, 0);
     if(sockfd < 0){
         perror("socket error");
         exit(1);
     }
 
-    memset(&server_addr, '\0', sizeof(server_addr));
+    memset(&server_addr, 0, sizeof(server_addr));
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(port);
     server_addr.sin_addr.s_addr = inet_addr(ip);
@@ -45,5 +45,5 @@ int main(int argc, char ** argv){
     recvfrom(sockfd, buffer, BUF_SIZE, 0, (struct sockaddr*)&client_addr, &addr_size);
     sendto(sockfd, buffer, BUF_SIZE, 0, (struct sockaddr*)&client_addr, addr_size);
 
-    return 0;
+    exit(0);
 }
